@@ -1,0 +1,3902 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\PassOptionsToPackage{dvipsnames,svgnames*,x11names*}{xcolor}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={NLP / tensorflow2},
+  colorlinks=true,
+  linkcolor={Maroon},
+  filecolor={Maroon},
+  citecolor={Blue},
+  urlcolor={blue},
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{kotex}
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+
+\title{NLP / tensorflow2}
+\author{}
+\date{\vspace{-2.5em}}
+
+\begin{document}
+\maketitle
+
+\hypertarget{uxc18cuxac1c}{%
+\section{소개}\label{uxc18cuxac1c}}
+
+이 파일을 통해 딥러닝과 NLP에 필요한 기본 개념과 여러 모델들을
+간단하게나마 수학적으로 풀어나가보고자 한다.
+
+\hypertarget{uxc8fcuxc131uxbd84uxbd84uxc11d-uxacf5uxbd84uxc0b0uxd589uxb82c-uxace0uxc733uxac12uxacfc-uxace0uxc720uxbca1uxd130}{%
+\section{주성분분석, 공분산행렬, 고윳값과
+고유벡터}\label{uxc8fcuxc131uxbd84uxbd84uxc11d-uxacf5uxbd84uxc0b0uxd589uxb82c-uxace0uxc733uxac12uxacfc-uxace0uxc720uxbca1uxd130}}
+
+\hypertarget{uxc8fcuxc131uxbd84uxbd84uxc11d-pcauxc774-uxbb34uxc5c7uxc778uxac00uxc694}{%
+\subsection{\texorpdfstring{\texttt{주성분분석\ (PCA)}이
+무엇인가요?}{주성분분석 (PCA)이 무엇인가요?}}\label{uxc8fcuxc131uxbd84uxbd84uxc11d-pcauxc774-uxbb34uxc5c7uxc778uxac00uxc694}}
+
+주성분분석 (\emph{Principal component analysis})\\
+→ 원래 데이터들을 그대로 사용하는 것이 아니라, 원래 데이터들의
+\texttt{Principal\ Component} 를 가지고 분석하는 것입니다.\\
+어려운 말로 쓰자면, 분석에 포함된 변수들의 선형결합을 이용하여
+주성분이라 불리는 새로운 변수를 생성하는 방법입니다.\\
+p개의 변수에는 p개의 주성분이 존재하고, 이 중에 중요한 주성분을 찾아서
+그 의미를 해석하게 됩니다.\\
+변수들의 선형결합으로 이루어진 주성분을 이용하기에 자료가 갖고 있는
+대부분의 정보를 활용할 수 있다는 장점이 있습니다.\\
+예를들어 고등학교에는 여러 교과목이 있지만, 이를 가중평균을 내어
+수리영역, 언어영역으로 나누는 것들이 예시입니다.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{uxadf8uxb807uxb2e4uxba74-uxc8fcuxc131uxbd84uxc740-uxbb34uxc5c7uxc778uxac00uxc694}{%
+\subsection{\texorpdfstring{그렇다면 \texttt{주성분}은
+무엇인가요?}{그렇다면 주성분은 무엇인가요?}}\label{uxadf8uxb807uxb2e4uxba74-uxc8fcuxc131uxbd84uxc740-uxbb34uxc5c7uxc778uxac00uxc694}}
+
+Principal Component, 주성분이란
+\texttt{주어진\ 데이터(의\ 분산)을\ 가장\ 잘\ 표현하는\ 성분}입니다.
+
+\begin{figure}
+
+{\centering \includegraphics[width=1\linewidth]{C:/rdata/NLP_study-ml-tf2/i1} 
+
+}
+
+\caption{PCA}\label{fig:unnamed-chunk-1}
+\end{figure}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{uxc8fcuxc131uxbd84uxc740-uxc5b4uxb5bbuxac8c-uxad6cuxd574uxc694}{%
+\subsection{\texorpdfstring{주성분은 \texttt{어떻게}
+구해요?}{주성분은 어떻게 구해요?}}\label{uxc8fcuxc131uxbd84uxc740-uxc5b4uxb5bbuxac8c-uxad6cuxd574uxc694}}
+
+주성분은 아무렇게나 구해도 \texttt{이론적으론} 상관 없습니다.
+
+그래도 우리는 데이터 공부하는 사람이니,
+
+\begin{itemize}
+\tightlist
+\item
+  주어진 데이터의 \texttt{정보를\ 최대한\ 잃지\ 않게}
+\item
+  주어진 데이터의 \texttt{분산을\ 가장\ 잘\ 설명할\ 수\ 있게}\\
+\item
+  주어진 데이터의 \texttt{중심을\ 지날\ 수\ 있게}
+\end{itemize}
+
+그래도 기왕이면 위의 방법들을 거치는 것이 좋지 않을까요?
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{uxadf8-uxbc29uxbc95uxb4e4uxc744-uxb9ccuxc871uxd558uxb294-uxc8fcuxc131uxbd84uxc744-uxad6cuxd558uxb294-uxbc29uxbc95uxc774-uxc788uxb098uxc694}{%
+\subsection{\texorpdfstring{그 방법들을 만족하는 주성분을 구하는
+\texttt{방법}이
+있나요?}{그 방법들을 만족하는 주성분을 구하는 방법이 있나요?}}\label{uxadf8-uxbc29uxbc95uxb4e4uxc744-uxb9ccuxc871uxd558uxb294-uxc8fcuxc131uxbd84uxc744-uxad6cuxd558uxb294-uxbc29uxbc95uxc774-uxc788uxb098uxc694}}
+
+우선 그 방법을 알기 위해선 간단한 수학 개념을 짚고 가야 합니다.
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{표준화} (주어진 데이터의 중심을 지날 수 있게, 혹은 단위의
+  영향이 클까봐(e.g.~cm, kg))
+\item
+  \textbf{분산공분산행렬} (주어진 데이터를 가장 잘 설명할 수 있는 하나의
+  행렬)\\
+\item
+  그 행렬의 \textbf{고윳값과 고유벡터} (주어진 데이터의 분산을 가장 잘
+  설명할 수 있게)
+\end{itemize}
+
+이 방법들을 만족하는 수학적 방법들을 살펴보겠습니다.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{uxd45cuxc900uxd654-uxc8fcuxc5b4uxc9c4-uxb370uxc774uxd130uxc758-uxc911uxc2ecuxc744-uxc9c0uxb098uxbcf4uxc790.}{%
+\subsubsection{표준화, 주어진 데이터의 중심을
+지나보자.}\label{uxd45cuxc900uxd654-uxc8fcuxc5b4uxc9c4-uxb370uxc774uxd130uxc758-uxc911uxc2ecuxc744-uxc9c0uxb098uxbcf4uxc790.}}
+
+표준화란, 주어진 데이터의 속성(feature)들을 평균이 0, 분산이 1인
+데이터로 변환해주는 과정을 말합니다. 이 과정을 통해야 저희는 모든
+속성들을 같은 scale로 볼 수가 있습니다.
+
+\[
+z = \frac{x - \mu}{\sigma}
+\] 때로는 표준편차로 나눠주지 않고, 평균만 빼주는 경우도 있습니다.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{uxbd84uxc0b0uxacf5uxbd84uxc0b0uxd589uxb82c-uxc8fcuxc5b4uxc9c4-uxb370uxc774uxd130uxb4e4uxc744-uxac00uxc7a5-uxc798-uxc124uxba85uxd558uxb294-uxd589uxb82c}{%
+\subsubsection{분산공분산행렬, 주어진 데이터들을 가장 잘 설명하는
+행렬}\label{uxbd84uxc0b0uxacf5uxbd84uxc0b0uxd589uxb82c-uxc8fcuxc5b4uxc9c4-uxb370uxc774uxd130uxb4e4uxc744-uxac00uxc7a5-uxc798-uxc124uxba85uxd558uxb294-uxd589uxb82c}}
+
+\textbf{분산공분산행렬}이란,\\
+일종의 행렬로써, 데이터의 구조를 설명해주며, 특히 특징 쌍(feature
+pairs)들의 변동이 얼마나 닮았는가(다른 말로는 얼마만큼이나 함께
+변하는가)를 행렬에 나타내고 있습니다.\\
+보통 기호로는 이렇게 나타냅니다. \[
+\sum
+\]
+
+행렬은 \textbf{사상(mapping)}입니다.\\
+쉽게 말하면, 어느 임의의 벡터에 행렬을 곱하면 그 벡터가 바뀐다는
+의미입니다.\\
+기존의 어떤 데이터가 있었다고 하면 우리는 그 \textbf{데이터가 어떤
+행렬의 곱으로 인해 바뀐 데이터}라고 생각해봅시다.
+
+\begin{center}\includegraphics[width=0.5\linewidth]{C:/rdata/NLP_study-ml-tf2/i3} \end{center}
+
+\begin{center}\includegraphics[width=0.5\linewidth]{C:/rdata/NLP_study-ml-tf2/i2} \end{center}
+
+이번엔 공분산행렬의 값들이 나타내는 건 무엇인지 알아봅시다.
+
+\begin{figure}
+
+{\centering \includegraphics[width=1\linewidth]{C:/rdata/NLP_study-ml-tf2/i4} 
+
+}
+
+\caption{PCA}\label{fig:unnamed-chunk-3}
+\end{figure}
+\begin{figure}
+
+{\centering \includegraphics[width=1\linewidth]{C:/rdata/NLP_study-ml-tf2/i14} 
+
+}
+
+\caption{PCA}\label{fig:unnamed-chunk-4}
+\end{figure}
+
+그렇다면 공분산행렬은 어떻게 구할 수 있을까요?
+
+\begin{figure}
+
+{\centering \includegraphics[width=1\linewidth]{C:/rdata/NLP_study-ml-tf2/i10} 
+
+}
+
+\caption{PCA}\label{fig:unnamed-chunk-5}
+\end{figure}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{uxadf8uxb798uxc11cuxc694}{%
+\subsubsection{그래서요?}\label{uxadf8uxb798uxc11cuxc694}}
+
+결론부터 말씀드리자면, 우리는 데이터의 공분산행렬의 고윳값과 고유벡터를
+구할 수만 있다면 데이터의 주성분을 바로 구할 수 있습니다.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{uxace0uxc733uxac12uxacfc-uxace0uxc720uxbca1uxd130uxb294-uxc5b4uxb5bbuxac8c-uxad6cuxd558uxb294uxb370uxc694}{%
+\subsubsection{고윳값과 고유벡터는 어떻게
+구하는데요?}\label{uxace0uxc733uxac12uxacfc-uxace0uxc720uxbca1uxd130uxb294-uxc5b4uxb5bbuxac8c-uxad6cuxd558uxb294uxb370uxc694}}
+
+선형대수를 알고계신다면, 고윳값과 고유벡터 관련해서 크기는 변해도 방향은
+변하지 않는 값이며, 수식으로는
+
+\[
+Ax = \lambda x
+\] 로 나타낼 수 있습니다. 이를 만족하는 람다 값이 고윳값이며, 이 람다를
+통해서 고유벡터도 구할 수 있습니다.\\
+즉 어떤 벡터 x에 행렬 A를 곱하고 나서 보니, 그냥 벡터 x에 어떤 상수값
+람다를 곱한거나 다름이 없었다는거죠.\\
+A를 통해서 mapping된 Ax는 사실 x에 상수(람다)만 곱한거와 같으니, 사실은
+방향의 변환이 없이 크기만 커진 것과 다름이 없는 겁니다.
+
+예시를 들어 설명 드리겠습니다. 다음과 같은 행렬 A, X가 있다고
+가정해보죠.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{A }\OtherTok{=} \FunctionTok{matrix}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{), }\AttributeTok{byrow =}\NormalTok{ T, }\AttributeTok{ncol=}\DecValTok{2}\NormalTok{);A}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      [,1] [,2]
+## [1,]    2    1
+## [2,]    1    2
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{X }\OtherTok{=} \FunctionTok{matrix}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{), }\AttributeTok{ncol=}\DecValTok{1}\NormalTok{);X}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      [,1]
+## [1,]    1
+## [2,]    1
+\end{verbatim}
+
+벡터 X를 좌표에 나타내면 다음과 같습니다.
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.5\linewidth]{C:/rdata/NLP_study-ml-tf2/i11} 
+
+}
+
+\caption{PCA}\label{fig:unnamed-chunk-7}
+\end{figure}
+
+근데 이 벡터 x에 행렬 A를 곱해주면,
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{A}\SpecialCharTok{\%*\%}\NormalTok{X}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      [,1]
+## [1,]    3
+## [2,]    3
+\end{verbatim}
+
+이런 값이 나옵니다. 이 벡터(AX)를 다시 한 번 좌표축에 나타내보면,
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.5\linewidth]{C:/rdata/NLP_study-ml-tf2/i12} 
+
+}
+
+\caption{PCA}\label{fig:unnamed-chunk-9}
+\end{figure}
+
+이렇게 표시할 수 있죠.
+
+기존의 빨간 (1,1) 벡터에서 (3,3) 벡터로 늘어난 것을 확인할 수
+있습니다.\\
+이럴 거였으면, 벡터 X에 행렬 A를 곱할 필요 없이 그냥 3을 곱해버렸으면
+되는 것 아닐까요?
+
+\hypertarget{uxb9deuxc2b5uxb2c8uxb2e4.}{%
+\subsubsection{맞습니다.}\label{uxb9deuxc2b5uxb2c8uxb2e4.}}
+
+그게 바로 고윳값의 의미입니다. 다시 한 번 수식과 함께 \texttt{고유}라는
+것의 의미를 곱씹어보면, \[
+Ax = \lambda x
+\]
+
+크기만 변했고 방향은 변하지 않았죠. 이 크기 3을 우리는 고윳값이라고
+하며, 이 방향을 고유벡터라고 얘기합니다. 손으로 구하는 방법은
+특성방정식과 행렬식에 대해서 알아보시길 권장합니다.
+
+이름도 어려운 특성방정식과 행렬식을 이용해서 사실 조금 더 엄밀하게
+계산해보면 고윳값은 3과 1이 나옵니다. 그리고 이를 통해서 고유벡터도
+구해보면,
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{eigen}\NormalTok{(A)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## eigen() decomposition
+## $values
+## [1] 3 1
+## 
+## $vectors
+##           [,1]       [,2]
+## [1,] 0.7071068 -0.7071068
+## [2,] 0.7071068  0.7071068
+\end{verbatim}
+
+여기서 \texttt{\$vectors}를 보시면 0.7 비스무리한 숫자로 나와있지만,
+엄밀하게 얘기해보면 그냥 (1,1)과 (-1,1)로 생각해도 무관합니다.
+
+공분산 행렬이 A라고 해봅시다.\\
+그랬을 때 정리해보면,\\
+우리는 어떤 데이터를 어떤 행렬을 곱해서 사상된 데이터로 생각해보기로
+했습니다. 공분산행렬을 통해 선형변환을 했을 때 그 크기는 변하고 방향이
+변하지 않는 벡터가 있다고 하면, 그 벡터의 크기는 각 1배와 3배가 된다는
+의미입니다. 그리고 그 방향성은 (1,1)과 (-1,1)이라는거죠.
+
+조금 더 어려운 점은, 이 Matrix의 고유값은 1과 3임을 생각해보면서
+따져보면,
+
+\begin{itemize}
+\tightlist
+\item
+  이 고윳값의 합은 1 + 3 = 4로, 각 피쳐의 분산의 합과 같습니다.\\
+\item
+  이 고윳값의 곱은 Matrix의 행렬식과 같습니다.
+\end{itemize}
+
+즉 이 분산공분산행렬과, 고윳값과 고유벡터만 있으면
+
+\begin{itemize}
+\tightlist
+\item
+  그 행렬의 고유의 방향성(고유벡터)
+\item
+  그 행렬의 고유의 방향성의 크기(고윳값)
+\item
+  각 feature의 분산(행렬의 대각원소)
+\item
+  각 feature끼리 얼마나 변하는지(행렬의 비대각원소)
+\end{itemize}
+
+까지 다 알 수 있다는 것이죠.
+
+\hypertarget{uxc544uxb2c8-uxadf8uxb798uxc11cuxc694}{%
+\subsubsection{아니
+그래서요?}\label{uxc544uxb2c8-uxadf8uxb798uxc11cuxc694}}
+
+주성분분석으로 돌아와보겠습니다. 우리는 그래서 주성분을 어떻게
+고를거냐면,
+
+\begin{itemize}
+\tightlist
+\item
+  분산이 가장 커지는 축을 첫번째 주성분으로 하고,
+\item
+  분산이 두번째로 커지는 축을 두번째 주성분으로 하고,
+\item
+  분산이 세번째로 커지는 축을 세번째 주성분으로 합니다.
+\item
+  조금 더 어려운 말은 각 주성분은 서로간 직교합니다. (공분산행렬의
+  고유벡터라서..)
+\end{itemize}
+
+이런 식으로 주성분을 선정한다면 우리는 원 데이터를 가장 잘 설명하는
+주성분을 선택할 수 있다는겁니다. 조금 어려운 말로 풀어보자면 주성분
+분석은 가장 큰 분산을 갖는 부분공간을 보존하는 최적의 선형변환을 통해
+주성분 몇 개로 전체 분산을 설명하려는 시도, 정도로 얘기할 수 있습니다.
+
+예시를 들어서 이해해보죠.
+
+\hypertarget{uxc9c1uxc811-uxad6cuxd574uxbcf4uxba74-uxc774uxd574uxac00-uxbe60uxb985uxb2c8uxb2e4.}{%
+\paragraph{직접 구해보면 이해가
+빠릅니다.}\label{uxc9c1uxc811-uxad6cuxd574uxbcf4uxba74-uxc774uxd574uxac00-uxbe60uxb985uxb2c8uxb2e4.}}
+
+가장 전형적인 예인 성적으로 해보겠습니다. 국어, 영어 성적이 다음과
+같다고 하겠습니다.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{X }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\StringTok{"국어"}\OtherTok{=}\FunctionTok{c}\NormalTok{(}\DecValTok{95}\NormalTok{,}\DecValTok{90}\NormalTok{,}\DecValTok{80}\NormalTok{,}\DecValTok{60}\NormalTok{,}\DecValTok{40}\NormalTok{,}\DecValTok{80}\NormalTok{,}\DecValTok{95}\NormalTok{,}\DecValTok{30}\NormalTok{,}\DecValTok{15}\NormalTok{,}\DecValTok{60}\NormalTok{), }\StringTok{"영어"}\OtherTok{=}\FunctionTok{c}\NormalTok{(}\DecValTok{95}\NormalTok{,}\DecValTok{95}\NormalTok{,}\DecValTok{75}\NormalTok{,}\DecValTok{70}\NormalTok{,}\DecValTok{35}\NormalTok{,}\DecValTok{80}\NormalTok{,}\DecValTok{90}\NormalTok{,}\DecValTok{25}\NormalTok{,}\DecValTok{10}\NormalTok{,}\DecValTok{70}\NormalTok{));X}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    국어 영어
+## 1    95   95
+## 2    90   95
+## 3    80   75
+## 4    60   70
+## 5    40   35
+## 6    80   80
+## 7    95   90
+## 8    30   25
+## 9    15   10
+## 10   60   70
+\end{verbatim}
+
+산점도를 그려보면,
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(ggplot2)}
+\FunctionTok{library}\NormalTok{(magrittr)}
+
+ \FunctionTok{ggplot}\NormalTok{(X) }\SpecialCharTok{+}
+ \FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ 국어, }\AttributeTok{y =}\NormalTok{ 영어) }\SpecialCharTok{+}
+ \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{size =}\NormalTok{ 3L, }\AttributeTok{colour =} \StringTok{"\#1f9e89"}\NormalTok{) }\SpecialCharTok{+}
+ \FunctionTok{labs}\NormalTok{(}\AttributeTok{x =} \StringTok{"국어"}\NormalTok{, }\AttributeTok{y =} \StringTok{"영어"}\NormalTok{, }\AttributeTok{title =} \StringTok{"국어, 영어 산점도"}\NormalTok{) }\SpecialCharTok{+}
+ \FunctionTok{theme\_minimal}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '�곸뼱' in 'mbcsToSbcs': dot substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '�곸뼱' in 'mbcsToSbcs': dot substituted for <98>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '�곸뼱' in 'mbcsToSbcs': dot substituted for <81>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '�곸뼱' in 'mbcsToSbcs': dot substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '�곸뼱' in 'mbcsToSbcs': dot substituted for <96>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '�곸뼱' in 'mbcsToSbcs': dot substituted for <b4>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '�곸뼱' in 'mbcsToSbcs': dot substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '�곸뼱' in 'mbcsToSbcs': dot substituted for <98>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '�곸뼱' in 'mbcsToSbcs': dot substituted for <81>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '�곸뼱' in 'mbcsToSbcs': dot substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '�곸뼱' in 'mbcsToSbcs': dot substituted for <96>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '�곸뼱' in 'mbcsToSbcs': dot substituted for <b4>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <ea>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <b5>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <ad>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <96>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <b4>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <98>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <81>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <96>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <b4>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <82>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <b0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <a0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <90>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <eb>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <8f>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <84>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <ea>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <b5>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <ad>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <96>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <b4>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <98>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <81>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <96>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <b4>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <82>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <b0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <a0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <90>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <eb>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <8f>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <84>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱' in 'mbcsToSbcs': dot substituted for <ea>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱' in 'mbcsToSbcs': dot substituted for <b5>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱' in 'mbcsToSbcs': dot substituted for <ad>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱' in 'mbcsToSbcs': dot substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱' in 'mbcsToSbcs': dot substituted for <96>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱' in 'mbcsToSbcs': dot substituted for <b4>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱' in 'mbcsToSbcs': dot substituted for <ea>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱' in 'mbcsToSbcs': dot substituted for <b5>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱' in 'mbcsToSbcs': dot substituted for <ad>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱' in 'mbcsToSbcs': dot substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱' in 'mbcsToSbcs': dot substituted for <96>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱' in 'mbcsToSbcs': dot substituted for <b4>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '�곸뼱' in 'mbcsToSbcs': dot substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '�곸뼱' in 'mbcsToSbcs': dot substituted for <98>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '�곸뼱' in 'mbcsToSbcs': dot substituted for <81>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '�곸뼱' in 'mbcsToSbcs': dot substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '�곸뼱' in 'mbcsToSbcs': dot substituted for <96>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '�곸뼱' in 'mbcsToSbcs': dot substituted for <b4>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '�곸뼱' in 'mbcsToSbcs': dot substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '�곸뼱' in 'mbcsToSbcs': dot substituted for <98>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '�곸뼱' in 'mbcsToSbcs': dot substituted for <81>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '�곸뼱' in 'mbcsToSbcs': dot substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '�곸뼱' in 'mbcsToSbcs': dot substituted for <96>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '�곸뼱' in 'mbcsToSbcs': dot substituted for <b4>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '�곸뼱' in 'mbcsToSbcs': dot substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '�곸뼱' in 'mbcsToSbcs': dot substituted for <98>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '�곸뼱' in 'mbcsToSbcs': dot substituted for <81>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '�곸뼱' in 'mbcsToSbcs': dot substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '�곸뼱' in 'mbcsToSbcs': dot substituted for <96>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '�곸뼱' in 'mbcsToSbcs': dot substituted for <b4>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <ea>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <b5>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <ad>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <96>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <b4>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <98>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <81>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <96>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <b4>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <82>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <b0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <a0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <90>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <eb>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <8f>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <84>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <ea>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <b5>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <ad>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <96>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <b4>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <98>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <81>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <96>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <b4>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <82>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <b0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <a0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <90>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <eb>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <8f>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <84>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <ea>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <b5>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <ad>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <96>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <b4>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <98>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <81>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <96>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <b4>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <82>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <b0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <a0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <90>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <eb>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <8f>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <84>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱' in 'mbcsToSbcs': dot substituted for <ea>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱' in 'mbcsToSbcs': dot substituted for <b5>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱' in 'mbcsToSbcs': dot substituted for <ad>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱' in 'mbcsToSbcs': dot substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱' in 'mbcsToSbcs': dot substituted for <96>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱' in 'mbcsToSbcs': dot substituted for <b4>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱' in 'mbcsToSbcs': dot substituted for <ea>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱' in 'mbcsToSbcs': dot substituted for <b5>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱' in 'mbcsToSbcs': dot substituted for <ad>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱' in 'mbcsToSbcs': dot substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱' in 'mbcsToSbcs': dot substituted for <96>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱' in 'mbcsToSbcs': dot substituted for <b4>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱' in 'mbcsToSbcs': dot substituted for <ea>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱' in 'mbcsToSbcs': dot substituted for <b5>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱' in 'mbcsToSbcs': dot substituted for <ad>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱' in 'mbcsToSbcs': dot substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱' in 'mbcsToSbcs': dot substituted for <96>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱' in 'mbcsToSbcs': dot substituted for <b4>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱' in 'mbcsToSbcs': dot substituted for <ea>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱' in 'mbcsToSbcs': dot substituted for <b5>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱' in 'mbcsToSbcs': dot substituted for <ad>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱' in 'mbcsToSbcs': dot substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱' in 'mbcsToSbcs': dot substituted for <96>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱' in 'mbcsToSbcs': dot substituted for <b4>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱' in 'mbcsToSbcs': dot substituted for <ea>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱' in 'mbcsToSbcs': dot substituted for <b5>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱' in 'mbcsToSbcs': dot substituted for <ad>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱' in 'mbcsToSbcs': dot substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱' in 'mbcsToSbcs': dot substituted for <96>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱' in 'mbcsToSbcs': dot substituted for <b4>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱' in 'mbcsToSbcs': dot substituted for <ea>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱' in 'mbcsToSbcs': dot substituted for <b5>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱' in 'mbcsToSbcs': dot substituted for <ad>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱' in 'mbcsToSbcs': dot substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱' in 'mbcsToSbcs': dot substituted for <96>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱' in 'mbcsToSbcs': dot substituted for <b4>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '�곸뼱' in 'mbcsToSbcs': dot substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '�곸뼱' in 'mbcsToSbcs': dot substituted for <98>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '�곸뼱' in 'mbcsToSbcs': dot substituted for <81>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '�곸뼱' in 'mbcsToSbcs': dot substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '�곸뼱' in 'mbcsToSbcs': dot substituted for <96>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '�곸뼱' in 'mbcsToSbcs': dot substituted for <b4>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '�곸뼱' in 'mbcsToSbcs': dot substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '�곸뼱' in 'mbcsToSbcs': dot substituted for <98>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '�곸뼱' in 'mbcsToSbcs': dot substituted for <81>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '�곸뼱' in 'mbcsToSbcs': dot substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '�곸뼱' in 'mbcsToSbcs': dot substituted for <96>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '�곸뼱' in 'mbcsToSbcs': dot substituted for <b4>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '�곸뼱' in 'mbcsToSbcs': dot substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '�곸뼱' in 'mbcsToSbcs': dot substituted for <98>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '�곸뼱' in 'mbcsToSbcs': dot substituted for <81>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '�곸뼱' in 'mbcsToSbcs': dot substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '�곸뼱' in 'mbcsToSbcs': dot substituted for <96>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '�곸뼱' in 'mbcsToSbcs': dot substituted for <b4>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <ea>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <b5>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <ad>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <96>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <b4>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <98>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <81>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <96>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <b4>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <82>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <b0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <a0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <90>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <eb>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <8f>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <84>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <ea>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <b5>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <ad>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <96>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <b4>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <98>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <81>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <96>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <b4>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <82>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <b0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <a0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <90>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <eb>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <8f>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <84>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <ea>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <b5>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <ad>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <96>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <b4>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <98>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <81>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <96>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <b4>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <82>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <b0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <a0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <90>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <eb>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <8f>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <84>
+\end{verbatim}
+
+\includegraphics{Mathmatics_for_DL_files/figure-latex/unnamed-chunk-12-1.pdf}
+
+언어영역 간에는 높은 선형관계가 있음을 확인할 수 있습니다.
+
+표준화를 시켜보면,
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{scale}\NormalTok{(X) }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##             국어       영어
+##  [1,]  1.0729494  1.0029844
+##  [2,]  0.8970560  1.0029844
+##  [3,]  0.5452694  0.3452897
+##  [4,] -0.1583040  0.1808660
+##  [5,] -0.8618774 -0.9700997
+##  [6,]  0.5452694  0.5097134
+##  [7,]  1.0729494  0.8385608
+##  [8,] -1.2136640 -1.2989471
+##  [9,] -1.7413441 -1.7922181
+## [10,] -0.1583040  0.1808660
+## attr(,"scaled:center")
+## 국어 영어 
+## 64.5 64.5 
+## attr(,"scaled:scale")
+##     국어     영어 
+## 28.42632 30.40925
+\end{verbatim}
+
+공분산행렬을 구해보면,
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{X }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{scale}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{cor}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##           국어      영어
+## 국어 1.0000000 0.9797802
+## 영어 0.9797802 1.0000000
+\end{verbatim}
+
+총분산은 2이고, 국어와 영어의 공분산은 약 0.98임을 알 수 있습니다. 꽤나
+높은 선형관계가 있음을 알 수 있습니다.
+
+고윳값을 구하면,
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{X }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{scale}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{cor}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{eigen}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## eigen() decomposition
+## $values
+## [1] 1.97978022 0.02021978
+## 
+## $vectors
+##           [,1]       [,2]
+## [1,] 0.7071068 -0.7071068
+## [2,] 0.7071068  0.7071068
+\end{verbatim}
+
+약 1.98과 0.02임을 알 수 있고, 고유벡터는 (1,1)과 (-1,1)임을 알 수
+있습니다.
+
+처음으로 돌아가서, 이 고유벡터들을 주어진 데이터에 표시해봅시다.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(ggplot2)}
+\FunctionTok{library}\NormalTok{(magrittr)}
+
+\NormalTok{X\_scale }\OtherTok{\textless{}{-}}\NormalTok{ X }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{scale}\NormalTok{()}
+
+ 
+\FunctionTok{ggplot}\NormalTok{(X\_scale }\SpecialCharTok{\%\textgreater{}\%}\NormalTok{ data.frame) }\SpecialCharTok{+}
+ \FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ 국어, }\AttributeTok{y =}\NormalTok{ 영어) }\SpecialCharTok{+}
+ \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{size =}\NormalTok{ 3L, }\AttributeTok{colour =} \StringTok{"\#1f9e89"}\NormalTok{) }\SpecialCharTok{+}
+ \FunctionTok{labs}\NormalTok{(}\AttributeTok{x =} \StringTok{"국어"}\NormalTok{, }\AttributeTok{y =} \StringTok{"영어"}\NormalTok{, }\AttributeTok{title =} \StringTok{"국어, 영어 산점도"}\NormalTok{) }\SpecialCharTok{+}
+ \FunctionTok{geom\_abline}\NormalTok{(}\AttributeTok{intercept=}\DecValTok{0}\NormalTok{, }\AttributeTok{slope=}\DecValTok{1}\NormalTok{, }\AttributeTok{color=}\StringTok{\textquotesingle{}blue\textquotesingle{}}\NormalTok{, }\AttributeTok{size=}\FloatTok{1.5}\NormalTok{) }\SpecialCharTok{+}
+ \FunctionTok{theme\_minimal}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '�곸뼱' in 'mbcsToSbcs': dot substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '�곸뼱' in 'mbcsToSbcs': dot substituted for <98>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '�곸뼱' in 'mbcsToSbcs': dot substituted for <81>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '�곸뼱' in 'mbcsToSbcs': dot substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '�곸뼱' in 'mbcsToSbcs': dot substituted for <96>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '�곸뼱' in 'mbcsToSbcs': dot substituted for <b4>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '�곸뼱' in 'mbcsToSbcs': dot substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '�곸뼱' in 'mbcsToSbcs': dot substituted for <98>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '�곸뼱' in 'mbcsToSbcs': dot substituted for <81>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '�곸뼱' in 'mbcsToSbcs': dot substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '�곸뼱' in 'mbcsToSbcs': dot substituted for <96>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '�곸뼱' in 'mbcsToSbcs': dot substituted for <b4>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <ea>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <b5>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <ad>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <96>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <b4>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <98>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <81>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <96>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <b4>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <82>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <b0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <a0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <90>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <eb>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <8f>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <84>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <ea>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <b5>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <ad>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <96>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <b4>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <98>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <81>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <96>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <b4>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <82>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <b0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <a0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <90>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <eb>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <8f>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <84>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱' in 'mbcsToSbcs': dot substituted for <ea>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱' in 'mbcsToSbcs': dot substituted for <b5>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱' in 'mbcsToSbcs': dot substituted for <ad>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱' in 'mbcsToSbcs': dot substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱' in 'mbcsToSbcs': dot substituted for <96>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱' in 'mbcsToSbcs': dot substituted for <b4>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱' in 'mbcsToSbcs': dot substituted for <ea>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱' in 'mbcsToSbcs': dot substituted for <b5>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱' in 'mbcsToSbcs': dot substituted for <ad>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱' in 'mbcsToSbcs': dot substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱' in 'mbcsToSbcs': dot substituted for <96>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱' in 'mbcsToSbcs': dot substituted for <b4>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '�곸뼱' in 'mbcsToSbcs': dot substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '�곸뼱' in 'mbcsToSbcs': dot substituted for <98>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '�곸뼱' in 'mbcsToSbcs': dot substituted for <81>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '�곸뼱' in 'mbcsToSbcs': dot substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '�곸뼱' in 'mbcsToSbcs': dot substituted for <96>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '�곸뼱' in 'mbcsToSbcs': dot substituted for <b4>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '�곸뼱' in 'mbcsToSbcs': dot substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '�곸뼱' in 'mbcsToSbcs': dot substituted for <98>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '�곸뼱' in 'mbcsToSbcs': dot substituted for <81>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '�곸뼱' in 'mbcsToSbcs': dot substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '�곸뼱' in 'mbcsToSbcs': dot substituted for <96>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '�곸뼱' in 'mbcsToSbcs': dot substituted for <b4>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '�곸뼱' in 'mbcsToSbcs': dot substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '�곸뼱' in 'mbcsToSbcs': dot substituted for <98>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '�곸뼱' in 'mbcsToSbcs': dot substituted for <81>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '�곸뼱' in 'mbcsToSbcs': dot substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '�곸뼱' in 'mbcsToSbcs': dot substituted for <96>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '�곸뼱' in 'mbcsToSbcs': dot substituted for <b4>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <ea>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <b5>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <ad>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <96>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <b4>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <98>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <81>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <96>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <b4>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <82>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <b0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <a0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <90>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <eb>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <8f>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <84>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <ea>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <b5>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <ad>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <96>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <b4>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <98>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <81>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <96>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <b4>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <82>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <b0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <a0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <90>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <eb>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <8f>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <84>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <ea>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <b5>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <ad>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <96>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <b4>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <98>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <81>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <96>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <b4>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <82>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <b0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <a0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <90>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <eb>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <8f>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <84>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱' in 'mbcsToSbcs': dot substituted for <ea>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱' in 'mbcsToSbcs': dot substituted for <b5>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱' in 'mbcsToSbcs': dot substituted for <ad>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱' in 'mbcsToSbcs': dot substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱' in 'mbcsToSbcs': dot substituted for <96>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱' in 'mbcsToSbcs': dot substituted for <b4>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱' in 'mbcsToSbcs': dot substituted for <ea>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱' in 'mbcsToSbcs': dot substituted for <b5>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱' in 'mbcsToSbcs': dot substituted for <ad>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱' in 'mbcsToSbcs': dot substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱' in 'mbcsToSbcs': dot substituted for <96>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱' in 'mbcsToSbcs': dot substituted for <b4>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱' in 'mbcsToSbcs': dot substituted for <ea>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱' in 'mbcsToSbcs': dot substituted for <b5>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱' in 'mbcsToSbcs': dot substituted for <ad>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱' in 'mbcsToSbcs': dot substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱' in 'mbcsToSbcs': dot substituted for <96>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱' in 'mbcsToSbcs': dot substituted for <b4>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱' in 'mbcsToSbcs': dot substituted for <ea>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱' in 'mbcsToSbcs': dot substituted for <b5>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱' in 'mbcsToSbcs': dot substituted for <ad>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱' in 'mbcsToSbcs': dot substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱' in 'mbcsToSbcs': dot substituted for <96>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱' in 'mbcsToSbcs': dot substituted for <b4>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱' in 'mbcsToSbcs': dot substituted for <ea>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱' in 'mbcsToSbcs': dot substituted for <b5>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱' in 'mbcsToSbcs': dot substituted for <ad>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱' in 'mbcsToSbcs': dot substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱' in 'mbcsToSbcs': dot substituted for <96>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱' in 'mbcsToSbcs': dot substituted for <b4>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱' in 'mbcsToSbcs': dot substituted for <ea>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱' in 'mbcsToSbcs': dot substituted for <b5>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱' in 'mbcsToSbcs': dot substituted for <ad>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱' in 'mbcsToSbcs': dot substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱' in 'mbcsToSbcs': dot substituted for <96>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱' in 'mbcsToSbcs': dot substituted for <b4>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '�곸뼱' in 'mbcsToSbcs': dot substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '�곸뼱' in 'mbcsToSbcs': dot substituted for <98>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '�곸뼱' in 'mbcsToSbcs': dot substituted for <81>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '�곸뼱' in 'mbcsToSbcs': dot substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '�곸뼱' in 'mbcsToSbcs': dot substituted for <96>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '�곸뼱' in 'mbcsToSbcs': dot substituted for <b4>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '�곸뼱' in 'mbcsToSbcs': dot substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '�곸뼱' in 'mbcsToSbcs': dot substituted for <98>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '�곸뼱' in 'mbcsToSbcs': dot substituted for <81>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '�곸뼱' in 'mbcsToSbcs': dot substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '�곸뼱' in 'mbcsToSbcs': dot substituted for <96>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '�곸뼱' in 'mbcsToSbcs': dot substituted for <b4>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '�곸뼱' in 'mbcsToSbcs': dot substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '�곸뼱' in 'mbcsToSbcs': dot substituted for <98>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '�곸뼱' in 'mbcsToSbcs': dot substituted for <81>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '�곸뼱' in 'mbcsToSbcs': dot substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '�곸뼱' in 'mbcsToSbcs': dot substituted for <96>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '�곸뼱' in 'mbcsToSbcs': dot substituted for <b4>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <ea>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <b5>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <ad>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <96>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <b4>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <98>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <81>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <96>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <b4>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <82>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <b0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <a0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <90>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <eb>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <8f>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <84>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <ea>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <b5>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <ad>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <96>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <b4>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <98>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <81>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <96>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <b4>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <82>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <b0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <a0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <90>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <eb>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <8f>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <84>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <ea>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <b5>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <ad>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <96>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <b4>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <98>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <81>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <96>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <b4>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <82>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <b0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <a0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <90>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <eb>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <8f>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
+## conversion failure on '援�뼱, �곸뼱 �곗젏��' in 'mbcsToSbcs': dot substituted
+## for <84>
+\end{verbatim}
+
+\includegraphics{Mathmatics_for_DL_files/figure-latex/unnamed-chunk-16-1.pdf}
+
+우리는 이 파란 직선을 PC1이라고 합시다. 첫번째 주성분이라는 뜻입니다. 이
+PC1이 주어진 데이터의 분산을 어느정도 설명하고 있냐면, 0.99정도(1.98/2)
+설명하고 있습니다. 주어진 총 분산이 2니까요.
+
+고윳값 0.02은 약 1\% 밖에 설명해주지 못합니다. 따라서 딱히 쓸 필요가
+없다고 생각할 수 있는겁니다.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{uxc0c8uxb85cuxc6b4-uxcd95pc1-pc2uxc73cuxb85c-uxbc14uxafd4uxbcf4uxc790.}{%
+\paragraph{새로운 축(PC1, PC2)으로
+바꿔보자.}\label{uxc0c8uxb85cuxc6b4-uxcd95pc1-pc2uxc73cuxb85c-uxbc14uxafd4uxbcf4uxc790.}}
+
+우리는 더 이상 기존 변수 국어, 영어를 사용할 것이 아니므로 PC1, PC2를
+축으로 주어진 데이터를 다시 표현해봅시다.
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.5\linewidth]{C:/rdata/NLP_study-ml-tf2/i13} 
+
+}
+
+\caption{PCA}\label{fig:unnamed-chunk-17}
+\end{figure}
+
+결론적으로 우리는 데이터의 공분산행렬과 고유치들을 통해 두 개의 주성분을
+찾아냈었고, 그 중에 하나만의 주성분으로도 충분히 전체 데이터의 99프로를
+설명할 수 있었습니다.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{uxc774uxac8c-uxc81cuxc77c-uxc88buxc740uxac74uxac00uxc694}{%
+\subsection{이게 제일
+좋은건가요?}\label{uxc774uxac8c-uxc81cuxc77c-uxc88buxc740uxac74uxac00uxc694}}
+
+공분산행렬과 고유값, 벡터들을 통해서 구한 주성분이 항상 데이터의 분산을
+최대로 설명할 수 있습니다. 이에 대한 수학적 증명도 있지만
+생략하겠습니다.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{uxcc28uxc6d0uxc774-uxb354-uxb192uxc544uxc9c4uxb2e4uxace0-uxd558uxba74uxc694}{%
+\subsection{차원이 더 높아진다고
+하면요?}\label{uxcc28uxc6d0uxc774-uxb354-uxb192uxc544uxc9c4uxb2e4uxace0-uxd558uxba74uxc694}}
+
+차원이 3차원이라고 가정하면, 주어진 3차원의 데이터를 정사영 시킬 때,
+가장 분산을 잘 설명할 수 있는 평면을 찾으면 됩니다. 그 이상의 고차원
+데이터도 마찬가지입니다. 몇 개의 주성분을 쓸 지는 데이터 제공자의
+사전지식이나 분석자의 역량에 따라 달렸지만 설명도가 90\%를 넘긴다던지
+하는 특정 값을 사용하기도 합니다.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{uxc5b4uxb514uxc5d0-uxc4f0uxc774uxb098uxc694}{%
+\subsection{어디에
+쓰이나요?}\label{uxc5b4uxb514uxc5d0-uxc4f0uxc774uxb098uxc694}}
+
+저희가 일전에 했던 MNIST 데이터도 28 by 28 픽셀로 이루어진 28x28의
+차원의 데이터입니다. 이런 데이터에서도 쓰일 수 있습니다. 이미지분석,
+주성분회귀 등으로 많이 쓰이고 있습니다.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{uxadf8uxb807uxb2e4uxba74-uxbaa8uxb4e0-uxb370uxc774uxd130uxc5d0-uxc8fcuxc131uxbd84-uxbd84uxc11duxc744-uxd574uxbcfcuxae4c}{%
+\subsection{그렇다면 모든 데이터에 주성분 분석을
+해볼까?}\label{uxadf8uxb807uxb2e4uxba74-uxbaa8uxb4e0-uxb370uxc774uxd130uxc5d0-uxc8fcuxc131uxbd84-uxbd84uxc11duxc744-uxd574uxbcfcuxae4c}}
+
+그렇지 않습니다. 여기에 대해서는 발표가 길어져 생략하겠지만,
+\texttt{Bartlett\textquotesingle{}s\ test\ of\ sphericity}나,
+\texttt{KMO\ test}, \texttt{매니폴드}에 대해서 찾아보시길 바랍니다.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{uxb354-uxacf5uxbd80uxd560-uxc790uxb8cc}{%
+\subsection{더 공부할
+자료}\label{uxb354-uxacf5uxbd80uxd560-uxc790uxb8cc}}
+
+\begin{itemize}
+\tightlist
+\item
+  적절한 차원 수
+\item
+  사이킷런의 PCA 모델
+\item
+  randomized PCA
+\item
+  incremental PCA(IPCA)
+\item
+  커널 PCA
+\item
+  지경 선형 임베딩 (LLE)
+\item
+  MDS
+\item
+  t-SNE
+\item
+  linear discriminant analysis(LDA)
+\end{itemize}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{uxcc38uxace0uxc790uxb8cc}{%
+\subsection{참고자료}\label{uxcc38uxace0uxc790uxb8cc}}
+
+\texttt{공돌이의\ 수학노트} blog
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{svd-uxd2b9uxc787uxac12-uxbd84uxd574}{%
+\section{SVD 특잇값 분해}\label{svd-uxd2b9uxc787uxac12-uxbd84uxd574}}
+
+특잇값 분해(Singular Value Decomposition)는 어떤 행렬을 분해하는 방법 중
+하나입니다.\\
+LU(LR)분해, 스펙트럼 분해, 고윳값 분해, SVD(특잇값 분해) 등이
+있습니다.\\
+기본적으로, 정방행렬이라면 행렬의 대각화를 통해서 행렬의
+\texttt{곱셈}으로 표현할 수 있습니다.\\
+대칭이 아닌 일반적인 행렬에 대해선 SVD를 통해 분해가 가능합니다.\\
+데이터에서 가장 많이 쓰이는 분해는 고윳값 분해와 SVD 분해인 것
+같습니다.\\
+NLP에선, 고차원 벡터들의 가장 중요한 정보를 유지하면서 저차원,
+조밀한(dense) 벡터로 압축하고 싶을 때 사용합니다.\\
+Co-occurence matrix를 SVD하여 word vector를 얻는다던지 합니다.\\
+특잇값 분해에 대해 논하기 전에, 근본적인 질문부터 던져보겠습니다.
+
+\begin{itemize}
+\tightlist
+\item
+  분해해서 무엇이 좋나요?
+
+  \begin{itemize}
+  \tightlist
+  \item
+    수치 계산의 기본 부품 쯤 됩니다. 한 번 해놓으면 계산량이 줄어
+    연산속도가 적은 계산량으로 인해 빨라집니다.
+  \item
+    또 머신러닝이나 딥러닝 쪽에서 제법 많이 사용됩니다.
+
+    \begin{itemize}
+    \tightlist
+    \item
+      어디에 쓰이나요?
+
+      \begin{itemize}
+      \tightlist
+      \item
+        행렬근사, 최소제곱, Rank 계산, 영상이미지압축, Style Transfer,
+        이미지 인식, PCA 등
+      \end{itemize}
+    \end{itemize}
+  \end{itemize}
+\end{itemize}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{uxd2b9uxc787uxac12uxbd84uxd574uxc758-uxc815uxc758}{%
+\subsection{특잇값분해의
+정의}\label{uxd2b9uxc787uxac12uxbd84uxd574uxc758-uxc815uxc758}}
+
+특잇값 분해는 임의의 \emph{m} X \emph{n}차원의 행렬 \emph{A}에 대하여
+다음과 같이 행렬을 분해할 수 있는 방법 중 하나이다. \[
+A = U\sum V^T
+\] 여기서 네 행렬(\emph{A},\emph{\(\sum\)},\emph{U},\emph{V})의
+크기(혹은 차원)와 성질은 다음과 같습니다.
+
+\begin{itemize}
+\tightlist
+\item
+  \emph{A} : \emph{m} x \emph{n} 행렬
+\item
+  \emph{U} : \emph{m} x \emph{m} 직교행렬
+\item
+  \emph{\(\sum\)} : \emph{m} x \emph{n} 대각행렬
+\item
+  \emph{V} : \emph{n} x \emph{n} 직교행렬
+\end{itemize}
+
+직교행렬의 성질에 대해 잠깐 언급하자면,
+
+\[
+UU^T = I
+\] \[
+U^{-1} = U^T
+\]
+
+위와 같습니다.
+
+\emph{\(\sum\)} 행렬은 mXn 행렬이라면 다음과 같은 행렬입니다.
+
+\begin{equation*}
+\sum = 
+\begin{pmatrix}
+\sigma_{1} &      0       &      \cdots     &     0      \\
+0          &  \sigma_{2}  &      \cdots     &     0      \\
+           &              &      \ddots     &             \\
+0          &      0       &      \cdots     & \sigma_{n}  \\
+0          &      0       &      \cdots     &      0       \\
+\vdots     &    \vdots    &      \vdots     &  \vdots      \\
+0          &      0       &      \cdots     &      0
+\end{pmatrix}
+\end{equation*}
+
+설명을 기하학적으로 풀어서 쓰면,\\
+직교하는 벡터 집합에 대하여, 선형변환 후에 그 크기는 변하지만 여전히
+직교할 수 있게 만드는 그 직교벡터 집합은 무엇이고, 변형 후의 결과는
+무엇인가?\\
+로 쓸 수 있습니다.
+
+이 식은, \[
+A = U\sum V^T
+\]
+
+이렇게 쓸 수 있고, \[
+AV = U\sum
+\]
+
+이 식을 보면, 직교벡터들의 집합 \emph{V}에 선형변환 \emph{A}를 했을 때,
+직교벡터들의 다른 집합 \emph{U}에 크기 변화만 주는
+\emph{\(\sum\)}(scaling)의 곱과 같냐는 말로 해석 가능합니다.
+
+사진으로 나타내면,
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.5\linewidth]{C:/rdata/NLP_study-ml-tf2/svd} 
+
+}
+
+\caption{SVD}\label{fig:unnamed-chunk-18}
+\end{figure}
+
+다음과 같습니다.
+
+정리하면, SVD를 이용해 임의의 행렬 A를 정보량(scaling factor)에 따라
+여러 layer로 쪼개서 생각할 수 있게 해주는 것입니다.
+
+다른 기하학적 의미로는, rotation -\textgreater{} scaling -\textgreater{}
+rotaion 입니다.
+
+\begin{figure}
+
+{\centering \includegraphics[width=1\linewidth]{C:/rdata/NLP_study-ml-tf2/svd2} 
+
+}
+
+\end{figure}
+
+\hypertarget{svd-in-nlp}{%
+\subsection{SVD in NLP}\label{svd-in-nlp}}
+
+NLP에서 \texttt{co-occurence\ matrix}에서 \texttt{SVD}를 통해 차원이
+감소된 단어 벡터를 구하는 과정을 도식화하면 다음과 같다.
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{C:/rdata/NLP_study-ml-tf2/co-occurence} 
+
+}
+
+\end{figure}
+\begin{figure}
+
+{\centering \includegraphics[width=1\linewidth]{C:/rdata/NLP_study-ml-tf2/SVDreduction} 
+
+}
+
+\end{figure}
+
+\hypertarget{svd-in-python}{%
+\subsection{SVD in python}\label{svd-in-python}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{import}\NormalTok{ numpy }\ImportTok{as}\NormalTok{ np}
+
+\NormalTok{X }\OperatorTok{=}\NormalTok{ np.array([[}\DecValTok{0}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{], }\CommentTok{\# I}
+\NormalTok{              [}\DecValTok{2}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{], }\CommentTok{\# ate}
+\NormalTok{              [}\DecValTok{2}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{0}\NormalTok{], }\CommentTok{\# like}
+\NormalTok{              [}\DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{], }\CommentTok{\# a}
+\NormalTok{              [}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{], }\CommentTok{\# banana}
+\NormalTok{              [}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{], }\CommentTok{\# cherry}
+\NormalTok{              [}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{], }\CommentTok{\# deep}
+\NormalTok{              [}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{], }\CommentTok{\# learning}
+\NormalTok{              [}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{], }\CommentTok{\# NLP}
+\NormalTok{              [}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{0}\NormalTok{]]) }\CommentTok{\# . }
+              
+\CommentTok{\# X\_svd}
+\NormalTok{U,S,V\_t }\OperatorTok{=}\NormalTok{ np.linalg.svd(X)}
+\NormalTok{k }\OperatorTok{=} \DecValTok{5}
+\NormalTok{theta }\OperatorTok{=} \BuiltInTok{sum}\NormalTok{(S[:k]) }\OperatorTok{/} \BuiltInTok{sum}\NormalTok{(S)}
+\BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f\textquotesingle{}theta : }\SpecialCharTok{\{}\NormalTok{theta}\SpecialCharTok{\}}\SpecialStringTok{\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## theta : 0.8174988844487284
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{U }\OperatorTok{=}\NormalTok{ U[:,:k]}
+\BuiltInTok{print}\NormalTok{(U)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [[-0.58951321  0.63338858 -0.07381218 -0.31561873  0.08921915]
+##  [-0.43880494 -0.4679372  -0.0950592  -0.15540716  0.40200628]
+##  [-0.49906814 -0.51894471  0.18296896 -0.18902671 -0.32887242]
+##  [-0.21718772  0.19140752  0.37405398  0.29204662  0.48061906]
+##  [-0.12612756 -0.06426321 -0.39796596  0.39641327  0.19296524]
+##  [-0.12612756 -0.06426321 -0.39796596  0.39641327  0.19296524]
+##  [-0.19421905  0.18666537  0.02954001  0.04266901 -0.41679693]
+##  [-0.11890892 -0.06274144 -0.25333285  0.28215586 -0.35443303]
+##  [-0.21471749  0.16369162 -0.31774506  0.17599977 -0.30080158]
+##  [-0.184132    0.00884932  0.57389513  0.57316285 -0.16426787]]
+\end{verbatim}
+
+보다 자세한 내용은\\
+\href{https://angeloyeo.github.io/2019/08/01/SVD.html}{공돌이의수학정리노트블로그}\\
+\href{https://www.youtube.com/watch?v=cq5qlYtnLoY\&t=1520s}{공돌이의수학정리SVD유튜브}\\
+를 참고하면 좋다.
+
+\end{document}
