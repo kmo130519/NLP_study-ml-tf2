@@ -35,19 +35,22 @@ x
 
     ## torch_tensor
     ## (1,.,.) = 
-    ##   0  0  0
-    ##   0  0  0
-    ##   0  0  0
+    ##  1e-17 *
+    ##   1.1870  0.0000  1.1866
+    ##    0.0000  1.1869  0.0000
+    ##    1.1867  0.0000  1.1867
     ## 
     ## (2,.,.) = 
-    ##   0  0  0
-    ##   0  0  0
-    ##   0  0  0
+    ##  1e-17 *
+    ##   0.0000  1.1867  0.0000
+    ##    1.1870  0.0000  1.1867
+    ##    0.0000  1.1869  0.0000
     ## 
     ## (3,.,.) = 
-    ##   0  0  0
-    ##   0  0  0
-    ##   0  0  0
+    ##  1e-17 *
+    ##   1.1867  0.0000  1.1869
+    ##    0.0000  1.1869  0.0000
+    ##    1.1868  0.0000  1.1868
     ## 
     ## (4,.,.) = 
     ##   0  0  0
@@ -104,11 +107,11 @@ rand_tensor
 ```
 
     ## torch_tensor
-    ##  0.6292  0.5852  0.5812
-    ##  0.4024  0.3491  0.1921
-    ##  0.9871  0.8696  0.8483
-    ##  0.7070  0.6521  0.2416
-    ##  0.5751  0.1661  0.2021
+    ##  0.1162  0.3832  0.6156
+    ##  0.6499  0.0142  0.9525
+    ##  0.0795  0.7376  0.0448
+    ##  0.0360  0.7335  0.0172
+    ##  0.2790  0.6209  0.2867
     ## [ CPUFloatType{5,3} ]
 
 텐서에 접근할 때는 R에서의 array의 접근 문법, subsetting 등으로
@@ -120,9 +123,9 @@ rand_tensor[1,]
 ```
 
     ## torch_tensor
-    ##  0.6292
-    ##  0.5852
-    ##  0.5812
+    ##  0.1162
+    ##  0.3832
+    ##  0.6156
     ## [ CPUFloatType{3} ]
 
 ``` r
@@ -130,9 +133,9 @@ rand_tensor[1:3,]
 ```
 
     ## torch_tensor
-    ##  0.6292  0.5852  0.5812
-    ##  0.4024  0.3491  0.1921
-    ##  0.9871  0.8696  0.8483
+    ##  0.1162  0.3832  0.6156
+    ##  0.6499  0.0142  0.9525
+    ##  0.0795  0.7376  0.0448
     ## [ CPUFloatType{3,3} ]
 
 ``` r
@@ -140,9 +143,9 @@ rand_tensor[-1,]
 ```
 
     ## torch_tensor
-    ##  0.5751
-    ##  0.1661
-    ##  0.2021
+    ##  0.2790
+    ##  0.6209
+    ##  0.2867
     ## [ CPUFloatType{3} ]
 
 ### 단위 텐서
@@ -1175,3 +1178,254 @@ taemo$calculate_average()
 
 위의 `UspStudent` 클래스에는 비공개 정보 `average` 변수가 `private`에
 감싸져서 입력 되었음을 주목하자.
+
+## 순전파 (Forward propagation)
+
+2단 순전파 신경망을 간단하게 구현해보자.  
+우리가 사용할 데이터는 다음과 같다.
+
+``` r
+X = matrix(c(1,2,3,4,5,6), byrow=T, ncol=2);X
+```
+
+    ##      [,1] [,2]
+    ## [1,]    1    2
+    ## [2,]    3    4
+    ## [3,]    5    6
+
+먼저 첫번째 표본인 (1,2)가 어떤 경로로 신경망을 지나가게 될 지
+생각해보자.  
+먼저 (1,2)는 각각 입력층에 x1,x2로 들어가게 되고, b11,b21의 가중치를
+곱해주게 되고, 그 다음 sigmoid 함수에 적용되게 된다. 이를 직접 코드로
+구현해보면,
+
+``` r
+set.seed(1234)
+
+X <- torch_tensor(matrix(1:2, ncol=2, byrow=T),
+                  dtype = torch_double())
+X
+```
+
+    ## torch_tensor
+    ##  1  2
+    ## [ CPUDoubleType{1,2} ]
+
+``` r
+# beta_1 = beta_11, beta_12
+beta_1 <- torch_tensor(matrix(runif(2), ncol=1), dtype=torch_double())
+beta_1
+```
+
+    ## torch_tensor
+    ##  0.1137
+    ##  0.6223
+    ## [ CPUDoubleType{2,1} ]
+
+``` r
+z_21 <- X$mm(beta_1)
+z_21
+```
+
+    ## torch_tensor
+    ##  1.3583
+    ## [ CPUDoubleType{1,1} ]
+
+``` r
+library(sigmoid)
+```
+
+    ## Warning: package 'sigmoid' was built under R version 4.0.5
+
+``` r
+a_21 <- sigmoid(z_21)
+a_21
+```
+
+    ## torch_tensor
+    ##  0.7955
+    ## [ CPUDoubleType{1,1} ]
+
+``` r
+gamma_1 <- runif(1)
+
+z_31 <- a_21 * gamma_1
+z_31
+```
+
+    ## torch_tensor
+    ##  0.4847
+    ## [ CPUDoubleType{1,1} ]
+
+``` r
+y_hat <- sigmoid(z_31)
+y_hat
+```
+
+    ## torch_tensor
+    ##  0.6188
+    ## [ CPUDoubleType{1,1} ]
+
+회귀분석과 연결지어 이 과정을 생각해보면, 각각의 은닉층에서 시그모이드
+함수를 통해 회귀분석 예측 결과를 모아놓고, 마지막 아웃풋에 예측값들을
+모아 마지막 노드에서 합치며 조금 더 좋은 값을 만들어내는 것으로도 해석
+가능하다.
+
+우리는 방금 한 개의 표본이 은닉층 중 하나의 노드를 거쳐가는 과정을
+구현해봤는데, 이번엔 한 개의 표본이 전체 은닉층을 지나가는 과정을
+구현해보자.
+
+``` r
+X <- torch_tensor(matrix(1:2, byrow=T, ncol=2),
+                  dtype = torch_double())
+X
+```
+
+    ## torch_tensor
+    ##  1  2
+    ## [ CPUDoubleType{1,2} ]
+
+``` r
+beta_1 <- torch_tensor(matrix(runif(2), ncol=1),
+                       dtype = torch_double())
+beta_2 <- torch_tensor(matrix(runif(2), ncol=1),
+                       dtype = torch_double())
+beta_3 <- torch_tensor(matrix(runif(2), ncol=1),
+                       dtype = torch_double())
+
+beta_1;beta_2;beta_3
+```
+
+    ## torch_tensor
+    ##  0.6234
+    ##  0.8609
+    ## [ CPUDoubleType{2,1} ]
+
+    ## torch_tensor
+    ##  0.6403
+    ##  0.0095
+    ## [ CPUDoubleType{2,1} ]
+
+    ## torch_tensor
+    ##  0.2326
+    ##  0.6661
+    ## [ CPUDoubleType{2,1} ]
+
+``` r
+beta <- torch_cat(c(beta_1,beta_2,beta_3),2)
+beta
+```
+
+    ## torch_tensor
+    ##  0.6234  0.6403  0.2326
+    ##  0.8609  0.0095  0.6661
+    ## [ CPUDoubleType{2,3} ]
+
+``` r
+z_2 <- X$mm(beta)
+z_2
+```
+
+    ## torch_tensor
+    ##  2.3452  0.6593  1.5647
+    ## [ CPUDoubleType{1,3} ]
+
+``` r
+library(sigmoid)
+a_2 <- sigmoid(z_2)
+a_2
+```
+
+    ## torch_tensor
+    ##  0.9126  0.6591  0.8270
+    ## [ CPUDoubleType{1,3} ]
+
+``` r
+gamma_1 <- runif(1)
+gamma_2 <- runif(1)
+gamma_3 <- runif(1)
+gamma <- torch_tensor(matrix(c(gamma_1,
+                               gamma_2, 
+                               gamma_3), ncol = 1),
+                      dtype = torch_double())
+z_3 <- a_2$mm(gamma)
+z_3
+```
+
+    ## torch_tensor
+    ##  1.3771
+    ## [ CPUDoubleType{1,1} ]
+
+``` r
+y_hat <- sigmoid(z_3)
+y_hat
+```
+
+    ## torch_tensor
+    ##  0.7985
+    ## [ CPUDoubleType{1,1} ]
+
+이번엔 전체 표본들에 대해서 경로 전체를 생각해보자.
+
+``` r
+X <- torch_tensor(matrix(1:6, ncol = 2, byrow = T),
+                  dtype = torch_double()) 
+X
+```
+
+    ## torch_tensor
+    ##  1  2
+    ##  3  4
+    ##  5  6
+    ## [ CPUDoubleType{3,2} ]
+
+``` r
+beta <- torch_tensor(matrix(runif(6), ncol = 3),
+                     dtype = torch_double())
+beta
+```
+
+    ## torch_tensor
+    ##  0.2827  0.2923  0.2862
+    ##  0.9234  0.8373  0.2668
+    ## [ CPUDoubleType{2,3} ]
+
+``` r
+z_2 <- X$mm(beta)
+z_2
+```
+
+    ## torch_tensor
+    ##  2.1296  1.9669  0.8199
+    ##  4.5419  4.2261  1.9260
+    ##  6.9543  6.4854  3.0320
+    ## [ CPUDoubleType{3,3} ]
+
+``` r
+a_2 <- sigmoid(z_2)
+
+
+gamma <- torch_tensor(matrix(runif(3), ncol = 1),
+                      dtype = torch_double())
+
+
+z_3 <- a_2$mm(gamma)
+z_3
+```
+
+    ## torch_tensor
+    ##  0.5904
+    ##  0.6900
+    ##  0.7205
+    ## [ CPUDoubleType{3,1} ]
+
+``` r
+y_hat <- sigmoid(z_3)
+y_hat
+```
+
+    ## torch_tensor
+    ##  0.6435
+    ##  0.6660
+    ##  0.6727
+    ## [ CPUDoubleType{3,1} ]
